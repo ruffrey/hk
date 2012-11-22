@@ -1,9 +1,7 @@
 exports.hook_rcpt = function (next, connection, params) {
     var rcpt = params[0]
 	   ,re = /\-\_\-/g;
-	   
-	this.loginfo(params);
-	
+		
     this.loginfo("Got recipient: " + rcpt);
 
 	/* Check user matches regex 'useremail-_-cid-_-login-_-@google.com' */
@@ -21,9 +19,7 @@ exports.hook_rcpt = function (next, connection, params) {
 	
     /* now get rid of the extension */
 	rcpt.user = aTo[0] + aTo[3];
-	
-    this.loginfo("Email address now: " + rcpt);
-	
+		
 	params[0] = rcpt;
     next();
 }
