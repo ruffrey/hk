@@ -2,6 +2,10 @@ var nano = require('nano')('http://127.0.0.1:5984');
 
 exports.hook_bounce = function (next, connection) {
 	
+	var rcpt = connection.todo.rcpt_to[0].user 
+		+ '@'
+		+ connection.todo.rcpt_to[0].host;
+	
 	function lgr(er){
 		fn.logerror(
 			+rcpt + ' - '
@@ -65,12 +69,11 @@ exports.hook_bounce = function (next, connection) {
 		
 		var retried_times = 0
 		   ,wait_time = 0
-		   ,rcpt = connection.todo.rcpt_to[0].user +'@'+ connection.todo.rcpt_to[0].host
 		   ,d = nano.db.use(connection.notes.usr+'_campaigns')
 		   ,fn = this;
 		
 	
-		fn.logerror('\n\nBounced: '+rcpt +' | '
+		fn.logerror('Bounced: '+rcpt +', '
 			+ connection.todo.notes.usr
 			+ '/' + connection.todo.notes.cid
 		);
