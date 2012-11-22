@@ -80,5 +80,5 @@ exports.hook_bounce = function (next, connection) {
 	}
 	
 	/* sending OK tells Haraka not to send a bounce message */
-	next(OK, 'Logging bounce for MailApp');
+	next(DENY, 'Logging bounce for MailApp');
 }
