@@ -28,6 +28,7 @@ exports.hook_bounce = function (next, connection) {
 				if(body.failed_recipients.indexOf(rcpt)==-1)
 				{
 					body.failed_recipients.push(rcpt);
+					body.total_failed_recipients++;
 					d.insert(body, function(err,resp){
 						if(err)
 						{
@@ -82,6 +83,7 @@ exports.hook_bounce = function (next, connection) {
 		
 	}
 	
-	/* sending OK tells Haraka not to send a bounce message */
-	next(OK, 'Logging bounce for MailApp but not sending message (OK)');
+	/* sending STOP tells Haraka not to send a bounce message and to
+	 * delete from the queue directory */
+	next(STOP, 'Logging bounce for MailApp and stopping (STOP)');
 }
